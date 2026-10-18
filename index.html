@@ -80,17 +80,19 @@ footer{text-align:center;color:var(--mut);font-size:.78rem;margin-top:30px;line-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 const T={ar:{brand:"ساينتي سرحان",tag:"أي ملف · أي لغة · في ثوانٍ",h1:"اسحب أي ملف، ودَع المعنى يتكشّف",sub:"PDF وWord وExcel ونصوص وأكواد وغيرها: لخّص، ترجم، اشرح، وابحث داخل ملفك في ثوانٍ.",drop:"أفلت ملفك هنا أو اضغط للاختيار",fmt:"حتى 60 ميجا · وصور المستندات",ready:"جاهز · اختر ما تريد بالأسفل",chars:"حرف",lg:"English",
 summary:["ملخص شامل","نظرة كاملة على الفكرة والأقسام والنتائج"],key:["أهم النقاط","الخلاصة الأساسية مرتبة بالأهمية"],explain:["شرح كل نقطة","مرور على الملف نقطة بنقطة بتبسيط"],translate:["ترجمة الملف","ترجمة أمينة مع الحفاظ على التنسيق"],search:["بحث بعنوان","ابحث عن موضوع أو عنوان داخل الملف"],exam:["امتحان شامل","يغطي الملف كله بعدد أسئلة تختاره"],questions:["استخراج الأسئلة","كل الأسئلة الممكنة عن الملف بالنوع الذي تختاره"],count:"عدد الأسئلة",make:"إنشاء",hist:"سجلّي",needLogin:"يجب تسجيل الدخول لعرض سجلّك وحفظ أعمالك.",empty:"لا يوجد عمل محفوظ بعد.",del:"حذف",qa:"سؤال وجواب",tf:"صح وغلط",mc:"اختيارات",
 toAr:"إلى العربية",toEn:"إلى الإنجليزية",ph:"اكتب العنوان أو الموضوع الذي تبحث عنه…",go:"ابحث",stop:"إيقاف",copy:"نسخ",save:"حفظ",copied:"تم النسخ ✓",matches:"مواضع الظهور في الملف",none:"لم يرد هذا النص حرفيًا في الملف.",
 eSize:"حجم الملف أكبر من 60 ميجا.",eEmpty:"لم أجد نصًا قابلًا للقراءة (قد يكون الملف صورة أو ممسوحًا ضوئيًا أو بصيغة غير مدعومة).",eRead:"تعذّرت قراءة الملف.",eAi:"الخدمة غير متاحة حاليًا أو لم تتم الموافقة عليها.",eRate:"عدد الطلبات كبير الآن، حاول بعد قليل.",trunc:"ملاحظة: الملف طويل فتمت معالجة الجزء الأول منه فقط.",
-foot:"ملفاتك تُقرأ داخل متصفحك فقط ولا تُخزَّن. يُرسَل النص إلى Claude للمعالجة لحظيًا. المحتوى المعروض يُعقَّم بالكامل."},
+foot:"ملفاتك تُقرأ داخل متصفحك فقط ولا تُخزَّن، ويُرسَل نصها إلى خدمة المعالجة لحظيًا. المحتوى المعروض يُعقَّم بالكامل."},
 en:{brand:"Scienti Sarhan",tag:"Any file · any language · in seconds",h1:"Drop any file and let the meaning surface",sub:"PDF, Word, Excel, text, code and more: summarize, translate, explain and search inside your file in seconds.",drop:"Drop your file here or click to choose",fmt:"Up to 60 MB · document photos too",ready:"Ready · pick an action below",chars:"chars",lg:"العربية",
 summary:["Full summary","The whole picture: ideas, sections, findings"],key:["Key points","The essentials, ranked by importance"],explain:["Explain each point","A simple point-by-point walkthrough"],translate:["Translate file","Faithful translation, formatting kept"],search:["Search a topic","Find a title or topic inside the file"],exam:["Full exam","Covers the whole file with the number of questions you choose"],questions:["Extract questions","Every possible question about the file, in the type you choose"],count:"Number of questions",make:"Generate",hist:"My history",needLogin:"You must sign in to view your history and save your work.",empty:"Nothing saved yet.",del:"Delete",qa:"Question & answer",tf:"True / False",mc:"Multiple choice",
 toAr:"To Arabic",toEn:"To English",ph:"Type the title or topic to look for…",go:"Search",stop:"Stop",copy:"Copy",save:"Save",copied:"Copied ✓",matches:"Where it appears in the file",none:"This exact text doesn’t appear in the file.",
 eSize:"File is larger than 60 MB.",eEmpty:"No readable text found (the file may be an image, a scan, or an unsupported format).",eRead:"Couldn’t read this file.",eAi:"The service is unavailable or wasn’t approved.",eRate:"Too many requests right now, try again shortly.",trunc:"Note: the file is long, so only the first part was processed.",
-foot:"Files are read in your browser only and never stored. Text is sent to Claude for instant processing. All displayed output is sanitized."}};
+foot:"Files are read in your browser only and never stored; their text is sent to the processing service instantly. All displayed output is sanitized."}};
 const M=[["summary","✦"],["key","◆"],["explain","☰"],["translate","⇄"],["search","⌕"],["exam","✎"],["questions","?"]];
 const $=id=>document.getElementById(id),esc=s=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let lang="ar",F=null,TXT="",mode="",tgt="en",ctl=null,RES="",NQ=20,QT="mc";
@@ -183,7 +185,23 @@ async function ask(p,on,imgs){if(!UID){$("sd").hidden=false;throw{code:"auth"}}i
 const r=await fetch(AI_URL,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+await FA.currentUser.getIdToken()},body:JSON.stringify({prompt:p,images:imgs||[]}),signal:ctl&&ctl.signal});
 if(!r.ok)throw{code:r.status===429?"rate_limited":"unavailable"};const j=await r.json();on(j.text);return{text:j.text}}
 async function ocr(fs){const o=[];try{for(const f of fs.slice(0,10)){const b=await shrink(f),d=await new Promise(r=>{const q=new FileReader;q.onload=()=>r(q.result.split(",")[1]);q.readAsDataURL(b)});o.push((await ask("Transcribe ALL the text visible in this image exactly as written, keeping its original language, line breaks and order. Output only the transcription, nothing else. If there is no text, output nothing.",()=>{},[d])).text)}}catch(e){throw"eAi"}return o.join("\n\n")}
-$("sv").onclick=()=>{if(!RES)return;const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([RES],{type:"text/markdown"}));a.download="scienti-sarhan-"+(mode||"result")+".md";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+function brk(cv,y){const g=cv.getContext("2d");for(let r=y;r>y-170&&r>0;r--){const d=g.getImageData(0,r,cv.width,1).data;let ok=1;for(let i=0;i<d.length;i+=4)if(d[i]<245||d[i+1]<245||d[i+2]<245){ok=0;break}if(ok)return r}return y}
+$("sv").onclick=async()=>{const b=$("sv");if(!RES||b.disabled)return;b.disabled=true;b.textContent="…";
+try{if(document.fonts)await document.fonts.ready;
+const box=document.createElement("div");box.style.cssText="position:fixed;left:-10000px;top:0;width:794px;padding:44px 48px;background:#fff;color:#111;font:15px/1.9 Cairo,'Segoe UI',Tahoma,Arial,sans-serif";
+box.innerHTML=`<h2 style="margin:0 0 4px;color:#047857;font-size:22px">${esc($("ot").textContent)}</h2><div style="color:#666;font-size:12px;padding-bottom:10px;border-bottom:2px solid #047857;margin-bottom:12px">${esc(F?F.name+" · ":"")}${new Date().toLocaleDateString(lang==="ar"?"ar-EG":"en-GB")}</div>`+md(RES);
+box.querySelectorAll("h4").forEach(h=>h.style.cssText="margin:16px 0 4px;color:#047857;font-size:17px");
+box.querySelectorAll("p").forEach(p=>p.style.margin="6px 0");
+box.querySelectorAll("li").forEach(l=>l.style.cssText="display:list-item;list-style:disc;margin:4px 1.3em");
+[...box.children].forEach(c=>c.setAttribute("dir","auto"));
+document.body.appendChild(box);
+const sc=Math.min(2,16000/box.scrollHeight),cv=await html2canvas(box,{scale:sc,backgroundColor:"#fff",useCORS:true});box.remove();
+const {jsPDF}=window.jspdf,pdf=new jsPDF({unit:"pt",format:"a4"}),PW=595.28,PHt=841.89,M=28,W=cv.width,PH=Math.floor((PHt-2*M)*W/PW);let y=0,first=1;
+while(y<cv.height){let e=Math.min(y+PH,cv.height);if(e<cv.height){const k=brk(cv,e);if(k>y+PH*.4)e=k}
+const pc=document.createElement("canvas");pc.width=W;pc.height=e-y;const g=pc.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,W,pc.height);g.drawImage(cv,0,y,W,e-y,0,0,W,e-y);
+if(!first)pdf.addPage();first=0;pdf.addImage(pc.toDataURL("image/jpeg",.92),"JPEG",0,M,PW,(e-y)*PW/W);y=e}
+pdf.save("scienti-sarhan-"+(mode||"result")+".pdf")}catch(e){console.error(e)}
+b.disabled=false;b.textContent=t("save")};
 paint();initUser();
 </script>
 </body>
