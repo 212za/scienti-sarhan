@@ -167,7 +167,7 @@ if(!still)requestAnimationFrame(f)}f()})();
 // ===== Firebase: Google sign-in + saved history (GitHub / own hosting) =====
 const FC={apiKey:"AIzaSyBMpZ7CXOJbgKpMqOjzsbbCcpHBlslU3mw",authDomain:"salah-52496.firebaseapp.com",databaseURL:"https://salah-52496-default-rtdb.europe-west1.firebasedatabase.app",projectId:"salah-52496",storageBucket:"salah-52496.firebasestorage.app",messagingSenderId:"235427387836",appId:"1:235427387836:web:aad716055bc7982103f3b9"};
 // رابط الـ Cloud Function الذي يعالج الملفات (انظر ai-function.js). بدونه لن تعمل المعالجة خارج Claude.
-const AI_URL="";
+const AI_URL="https://polished-hat-fb1b.salaheldeen982.workers.dev/";
 Object.assign(T.ar,{signin:"تسجيل الدخول بجوجل",signout:"تسجيل الخروج",eAuth:"تعذّر تسجيل الدخول. تأكد أن نطاق موقعك مضاف في Firebase (Authorized domains).",eAi:"سجّل الدخول أولًا، وتأكد من ضبط AI_URL لخادم المعالجة."});
 Object.assign(T.en,{signin:"Sign in with Google",signout:"Sign out",eAuth:"Sign-in failed. Make sure your site domain is added in Firebase (Authorized domains).",eAi:"Sign in first, and make sure AI_URL points to your processing server."});
 firebase.initializeApp(FC);
